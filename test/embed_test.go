@@ -20,7 +20,7 @@ func TestString(t *testing.T) {
 	fmt.Println(version2)
 }
 
-//go:embed db-normal.jpg
+//go:embed test/db-normal.jpg
 var logo []byte
 
 func TestEmbedByte(t *testing.T) {
