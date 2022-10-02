@@ -2,7 +2,6 @@ package golang_embed
 
 import (
 	"embed"
-	_ "embed"
 	"fmt"
 	"io/fs"
 	"io/ioutil"
@@ -43,4 +42,18 @@ func TestMultipleFiles(t *testing.T) {
 	fmt.Println(string(b))
 	c, _ := files.ReadFile("files/c.txt")
 	fmt.Println(string(c))
+}
+
+//go:embed files/*.txt
+var path embed.FS
+
+func TestPatchMatcher(t *testing.T) {
+	dir, _ := path.ReadDir("files")
+	for _, entry := range dir {
+		if !entry.IsDir() {
+			fmt.Println(entry.Name())
+			content, _ := path.ReadFile("files/" + entry.Name())
+			fmt.Println(string(content))
+		}
+	}
 }
